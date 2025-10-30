@@ -25,7 +25,7 @@ exports.signup = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: JWT_EXPIRES_IN * 1000,
-      sameSite: 'lax',
+      sameSite: 'none',
       domain: COOKIE_DOMAIN,
       path: '/'
     });
@@ -48,7 +48,7 @@ exports.login = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: JWT_EXPIRES_IN * 1000,
-      sameSite: 'lax',
+      sameSite: 'none',
       domain: COOKIE_DOMAIN,
       path: '/'
     });
