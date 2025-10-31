@@ -15,11 +15,27 @@ app.use(express.json());
 app.use(cookieParser());
 
 // CORS: allow frontend origin and credentials
-const FRONTEND_URL = process.env.CORS_ORIGIN || "https://forecast-flow-one.vercel.app" || "http://localhost:3000";
-app.use(cors({
-  origin: FRONTEND_URL || "http://localhost:3000",
-  credentials: true
-}));
+const allowedOrigins = [
+  "https://forecast-flow-one.vercel.app", // Production
+  "http://localhost:3000", // Development
+];
+
+// Dynamically allow origins
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/cities', cityRoutes);
