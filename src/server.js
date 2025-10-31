@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // CORS: allow frontend origin and credentials
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
+const FRONTEND_URL = process.env.CORS_ORIGIN || "https://forecast-flow-one.vercel.app";
 app.use(cors({
   origin: FRONTEND_URL,
   credentials: true
